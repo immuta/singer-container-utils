@@ -86,21 +86,22 @@ class TapRunner:
         catalog_process = subprocess.run(cmd, capture_output=True)
         self.catalog_file.write_text(catalog_process.stdout.decode("utf-8"))
 
-    def make_command(self):
+    def make_command(self, use_properties = False):
         "Create the tap command using the available config files."
         command = [self.execute_command]
 
         if self.config_file.exists():
             command.extend(["--config", self.config_file.as_posix()])
         if self.catalog_file.exists():
-            command.extend(["--catalog", self.catalog_file.as_posix()])
+            arg = "--properties" if use_properties else "--catalog"
+            command.extend([arg, self.catalog_file.as_posix()])
         if self.state_file.exists():
             command.extend(["--state", self.state_file.as_posix()])
 
         return command
 
-    def run(self):
-        tap_command = self.make_command()
+    def run(self, use_properties=False):
+        tap_command = self.make_command(use_properties)
 
         logging.info("Running tap command: %s", " ".join(tap_command))
         with open(self.output_file, "w") as f:

@@ -5,7 +5,7 @@ leveraging [Singer.io](https://singer.io) taps and targets.
 
 Install it by running:
 
-```
+```{zsh}
 pip install https://github.com/immuta/singer-container-utilities/archive/master.zip
 ```
 
