@@ -129,6 +129,7 @@ class TargetRunner:
         self,
         execute_command: str,
         required_config_keys: list = [],
+        optional_config_keys: list = [],
         path_to_config: str = "/tmp/config.json",
         path_to_input: str = "/tmp/tap_input.txt",
         path_to_output: str = "/tmp/target_output.txt",
@@ -136,6 +137,7 @@ class TargetRunner:
 
         self.execute_command = execute_command
         self.required_config_keys = required_config_keys
+        self.optional_config_keys = optional_config_keys
         self.config_file = pathlib.Path(path_to_config)
         self.input_file = pathlib.Path(path_to_input)
         self.output_file = pathlib.Path(path_to_output)
@@ -148,11 +150,12 @@ class TargetRunner:
         if self.config_file.exists():
             config_from_file = json.loads(self.config_file.read_text())
 
+        all_keys = {**self.required_config_keys, **self.optional_config_keys}
         config_from_env = {}
         if use_environment:
             config_from_env = {
                 v: os.environ.get(v.lower(), os.environ.get(v.upper()))
-                for v in self.required_config_keys
+                for v in all_keys
                 if os.environ.get(v.lower(), os.environ.get(v.upper()))
             }
 
