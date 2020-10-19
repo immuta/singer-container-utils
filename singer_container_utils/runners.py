@@ -150,7 +150,7 @@ class TargetRunner:
         if self.config_file.exists():
             config_from_file = json.loads(self.config_file.read_text())
 
-        all_keys = {**self.required_config_keys, **self.optional_config_keys}
+        all_keys = self.required_config_keys + self.optional_config_keys
         config_from_env = {}
         if use_environment:
             config_from_env = {
