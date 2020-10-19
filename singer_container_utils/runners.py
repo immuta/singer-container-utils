@@ -24,6 +24,7 @@ class TapRunner:
         self,
         execute_command: str,
         required_config_keys: list = [],
+        optional_config_keys: list = [],
         path_to_config: str = "/tmp/config.json",
         path_to_catalog: str = "/tmp/catalog.json",
         path_to_state: str = "/tmp/state.json",
@@ -55,11 +56,12 @@ class TapRunner:
         if self.config_file.exists():
             config_from_file = json.loads(self.config_file.read_text())
 
+        all_keys = self.required_config_keys + self.optional_config_keys
         config_from_env = {}
         if use_environment:
             config_from_env = {
                 v: os.environ.get(v.lower(), os.environ.get(v.upper()))
-                for v in self.required_config_keys
+                for v in all_keys
                 if os.environ.get(v.lower(), os.environ.get(v.upper()))
             }
 
