@@ -34,6 +34,7 @@ class TapRunner:
 
         self.execute_command = execute_command
         self.required_config_keys = required_config_keys
+        self.optional_config_keys = optional_config_keys
         self.config_file = pathlib.Path(path_to_config)
         self.catalog_file = pathlib.Path(path_to_catalog)
         self.state_file = pathlib.Path(path_to_state)
