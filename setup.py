@@ -8,7 +8,7 @@ setuptools.setup(
     classifiers=["Programming Language :: Python :: 3 :: Only"],
     py_modules=["singer_container_utils"],
     author="Stephen Bailey",
-    install_requires=[],
+    install_requires=["pandas"],
     author_email="sbailey@immuta.com",
     license="MIT",
     packages=setuptools.find_packages(),
