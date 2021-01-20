@@ -1,1 +1,2 @@
 from singer_container_utils.runners import TapRunner, TargetRunner
+from singer_container_utils.pandas import SingerSpec
