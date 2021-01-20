@@ -17,7 +17,7 @@ configuration keys, and the path to the output. When the tap runs, it will save 
 output to a specific file location, which can then be mapped to a target container,
 e.g. in Argo.
 
-```{python}
+```python
 from singer_container_utils import TapRunner
 
 tap = TapRunner(
@@ -34,7 +34,7 @@ tap.run()
 
 This package also adds a lightweight Singer namespace to Pandas DataFrames, which enable exporting of any `pd.DataFrame` to Singer records. 
 
-```{python}
+```python
 # t.py
 import pandas as pd
 import singer_container_utils
@@ -44,7 +44,7 @@ df = pd.DataFrame(d)
 output = df.singer.export(stream="test", primary_key="a")
 ```
 
-```{shell}
+```
 $ python t.py 
 {"type": "SCHEMA", "stream": "test", "key_properties": ["a"], "schema": {"type": "object", "properties": {"a": {"type": "integer"}, "b": {"type": "integer"}}}}
 {"type": "RECORD", "stream": "test", "record": {"a": 1, "b": 3}}
