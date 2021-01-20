@@ -28,3 +28,25 @@ tap = TapRunner(
 )
 tap.run()
 ```
+
+
+### Pandas Singer Namespace
+
+This package also adds a lightweight Singer namespace to Pandas DataFrames, which enable exporting of any `pd.DataFrame` to Singer records. 
+
+```{python}
+# t.py
+import pandas as pd
+import singer_container_utils
+
+d = {"a": [1, 2], "b": [3, 4]}
+df = pd.DataFrame(d)
+output = df.singer.export(stream="test", primary_key="a")
+```
+
+```{shell}
+$ python t.py 
+{"type": "SCHEMA", "stream": "test", "key_properties": ["a"], "schema": {"type": "object", "properties": {"a": {"type": "integer"}, "b": {"type": "integer"}}}}
+{"type": "RECORD", "stream": "test", "record": {"a": 1, "b": 3}}
+{"type": "RECORD", "stream": "test", "record": {"a": 2, "b": 4}}
+```
