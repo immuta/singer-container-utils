@@ -1,11 +1,12 @@
 import pandas as pd
 import pathlib
 import json
-import logging
 from typing import Union
+import logging
 
 LOGGER = logging.getLogger()
 LOGGER.setLevel(logging.INFO)
+
 
 @pd.api.extensions.register_dataframe_accessor("singer")
 class SingerSpec:
@@ -14,17 +15,25 @@ class SingerSpec:
 
     def export(
         self,
-        file_name: str = "/tmp/tap_output.txt",
         stream: Union[None, str] = None,
         primary_key: Union[None, str] = None,
+        file_name: Union[None, str] = None,
     ):
+        """
+        Transforms DataFrame to singer records.
+        """
         parsed = self.parse_df_to_json()
         schema = self.get_tap_schema(stream, primary_key, parsed)
         records = self.get_tap_records(stream, parsed)
-        stream_output = [json.dumps(x) for x in [schema] + records]
+        output = [json.dumps(x) for x in [schema] + records]
 
-        LOGGER.info("Saving output to file.")
-        pathlib.Path(file_name).write_text("\n".join(output))
+        if file_name:
+            LOGGER.info("Saving output to file.")
+            pathlib.Path(file_name).write_text("\n".join(output))
+        else:
+            LOGGER.info("Logging to STDOUT.")
+            print("\n".join(output))
+
         return output
 
     def parse_df_to_json(self):
