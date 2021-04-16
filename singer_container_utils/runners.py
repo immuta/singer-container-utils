@@ -86,6 +86,7 @@ class TapRunner:
             self.config_file.as_posix(),
             "--discover",
         ]
+        logging.info("Running: %s", cmd)
         catalog_process = subprocess.run(cmd, capture_output=True)
         self.catalog_file.write_text(catalog_process.stdout.decode("utf-8"))
 
