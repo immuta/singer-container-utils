@@ -1,5 +1,7 @@
 # Singer Container Utilities
 
+**NOTE: This repository has been archived with the movement of our infrastructure to Meltano. I encourage everyone who is interested in the work described here to check out the [Meltano](https://meltano.com) project, which provides a much more direct way of managing the configuration of a wide number of Singer taps, while still being compatible with a serverless workflow.**
+
 This is a simple utility library for easing the creation of Docker containers
 leveraging [Singer.io](https://singer.io) taps and targets.
 
